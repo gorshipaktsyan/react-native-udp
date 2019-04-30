@@ -41,7 +41,7 @@ function UdpSocket(options, onmessage) {
   if (typeof options === 'string') options = { type: options }
 
   if (options.type !== 'udp4' && options.type !== 'udp6') {
-    throw new Error('invalid udp socket type')
+    //throw new Error('invalid udp socket type')
   }
 
   this.type = options.type
@@ -77,7 +77,7 @@ UdpSocket.prototype._debug = function() {
 UdpSocket.prototype.bind = function(...args) {
   var self = this
 
-  if (this._state !== STATE.UNBOUND) throw new Error('Socket is already bound')
+  if (this._state !== STATE.UNBOUND) //throw new Error('Socket is already bound')
 
   let { port, address, callback } = normalizeBindOptions(...args)
 
@@ -176,10 +176,10 @@ UdpSocket.prototype._onReceive = function(info) {
 UdpSocket.prototype.send = function(buffer, offset, length, port, address, callback) {
   var self = this
 
-  if (typeof port !== 'number') throw new Error('invalid port')
-  if (!isValidIpOrHostname(address, this._ipRegex)) throw new Error('invalid address')
+  if (typeof port !== 'number') //throw new Error('invalid port')
+  if (!isValidIpOrHostname(address, this._ipRegex)) //throw new Error('invalid address')
 
-  if (offset !== 0) throw new Error('Non-zero offset not supported yet')
+  if (offset !== 0) //throw new Error('Non-zero offset not supported yet')
 
   if (this._state === STATE.UNBOUND) {
     var args = [].slice.call(arguments)
@@ -206,7 +206,7 @@ UdpSocket.prototype.send = function(buffer, offset, length, port, address, callb
     str = base64.fromByteArray(buffer)
   }
   else {
-    throw new Error('invalid message format')
+    //throw new Error('invalid message format')
   }
 
   Sockets.send(this._id, str, +port, address, function(err) {
@@ -222,7 +222,7 @@ UdpSocket.prototype.send = function(buffer, offset, length, port, address, callb
 
 UdpSocket.prototype.address = function() {
   if (this._state !== STATE.BOUND) {
-    throw new Error('socket is not bound yet')
+    //throw new Error('socket is not bound yet')
   }
 
   return {
@@ -236,7 +236,7 @@ UdpSocket.prototype.setBroadcast = function(flag) {
   var self = this
 
   if (this._state !== STATE.BOUND) {
-    throw new Error('you must bind before setBroadcast()')
+    //throw new Error('you must bind before setBroadcast()')
   }
 
   Sockets.setBroadcast(this._id, flag, function(err) {
@@ -262,7 +262,7 @@ UdpSocket.prototype.setMulticastLoopback = function(flag, callback) {
 
 UdpSocket.prototype.addMembership = function(multicastAddress) {
   if (this._state !== STATE.BOUND) {
-    throw new Error('you must bind before addMembership()')
+    //throw new Error('you must bind before addMembership()')
   }
 
   Sockets.addMembership(this._id, multicastAddress);
@@ -270,7 +270,7 @@ UdpSocket.prototype.addMembership = function(multicastAddress) {
 
 UdpSocket.prototype.dropMembership = function(multicastAddress) {
   if (this._state !== STATE.BOUND) {
-    throw new Error('you must bind before addMembership()')
+    //throw new Error('you must bind before addMembership()')
   }
 
   Sockets.dropMembership(this._id, multicastAddress);
@@ -292,7 +292,7 @@ function isValidIpOrHostname (address, ipRegex) {
 
 function normalizeError (err) {
   if (err) {
-    if (typeof err === 'string') err = new Error(err)
+    if (typeof err === 'string') //err = new Error(err)
 
     return err
   }
